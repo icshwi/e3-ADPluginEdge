@@ -1,0 +1,4 @@
+[submodule "ADPluginEdge"]
+	path = ADPluginEdge
+	url = https://github.com/areaDetector/ADPluginEdge
+	ignore = all
