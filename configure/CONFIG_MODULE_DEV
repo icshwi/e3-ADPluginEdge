@@ -6,12 +6,10 @@ E3_MODULE_VERSION:=develop
 
 
 # DEPENDENT MODULE VERSION
-# Example, 
-#ASYN_DEP_VERSION:=4.33.0
-#SEQ_DEP_VERSION:=2.1.21
-#PCRE_DEP_VERSION:=8.41.
-#ADCORE_DEP_VERSION:=3.2.0
-#ADSUPPORT_DEP_VERSION:=1.4.0
+# Example,
+ASYN_DEP_VERSION:=4.33.0
+ADCORE_DEP_VERSION:=3.3.2
+ADSUPPORT_DEP_VERSION:=1.4.0
 #
 # ONLY IF this module has the sequencer dependency. However,
 # in most case, we don't need to enable the following line,
