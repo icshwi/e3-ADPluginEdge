@@ -43,6 +43,7 @@ APPDB:=$(APP)/Db
 APPSRC:=$(APP)/edgeSrc
 
 USR_INCLUDES += $(shell pkg-config --cflags opencv)
+USR_LDFLAGS += -Wl,--no-as-needed
 
 USR_LDFLAGS += $(shell pkg-config --libs opencv)
 
