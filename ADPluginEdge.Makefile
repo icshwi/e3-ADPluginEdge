@@ -1,5 +1,5 @@
 #
-#  Copyright (c) 2017 - Present  European Spallation Source ERIC
+#  Copyright (c) 2018 - Present  European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
 #  it and/or modify it under the terms of the GNU General Public License
@@ -24,8 +24,8 @@
 
 
 where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-
 include $(E3_REQUIRE_TOOLS)/driver.makefile
+include $(where_am_I)/../configure/DECOUPLE_FLAGS
 
 ifneq ($(strip $(ASYN_DEP_VERSION)),)
 asyn_VERSION=$(ASYN_DEP_VERSION)
@@ -42,24 +42,19 @@ APP:=edgeApp
 APPDB:=$(APP)/Db
 APPSRC:=$(APP)/edgeSrc
 
+USR_INCLUDES += $(shell pkg-config --cflags opencv)
+
 USR_LDFLAGS += $(shell pkg-config --libs opencv)
 
 # https://gcc.gnu.org/wiki/FAQ#Wnarrowing
 # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=55783
 # -std=c++11 
-USR_CXXFLAGS += -Wno-narrowing
+#USR_CXXFLAGS += -Wno-narrowing
 
-DBDS += $(APPSRC)/NDPluginEdge.dbd
+DBDS    += $(APPSRC)/NDPluginEdge.dbd
 SOURCES += $(APPSRC)/NDPluginEdge.cpp
-#HEADERS += $(APPSRC)/NDPluginEdge.h
+HEADERS += $(APPSRC)/NDPluginEdge.h
 
-# # We don't have LIB_INSTALLS, so will tackle later
-# #ifeq (linux-x86_64, $(findstring linux-x86_64, $(T_A)))
-ifeq ($(T_A),linux-x86_64)
-#USR_LDFLAGS += -Wl,--enable-new-dtags
-USR_LDFLAGS += -Wl,-rpath=$(E3_MODULES_VENDOR_LIBS_LOCATION)
-USR_LDFLAGS += -L$(E3_MODULES_VENDOR_LIBS_LOCATION)
-endif
 
 # We have to convert all to db 
 TEMPLATES += $(wildcard $(APPDB)/*.db)
@@ -71,7 +66,6 @@ TEMPLATES += $(wildcard $(APPDB)/*.db)
 ## Please look at e3-mrfioc2 for example.
 
 EPICS_BASE_HOST_BIN = $(EPICS_BASE)/bin/$(EPICS_HOST_ARCH)
-MSI = $(EPICS_BASE_HOST_BIN)/msi
 
 USR_DBFLAGS += -I . -I ..
 USR_DBFLAGS += -I $(EPICS_BASE)/db
@@ -101,13 +95,8 @@ $(TMPS):
 .PHONY: db $(SUBS) $(TMPS)
 
 
-# Overwrite
-# RULES_VLIBS
-# CONFIG_E3
-vlibs: $(VENDOR_LIBS)
+vlibs: 
 
 $(VENDOR_LIBS):
-	$(QUIET) $(SUDO) install -m 755 -d $(E3_MODULES_VENDOR_LIBS_LOCATION)/
-	$(QUIET) $(SUDO) install -m 644 $@ $(E3_MODULES_VENDOR_LIBS_LOCATION)/
 
 .PHONY: $(VENDOR_LIBS) vlibs
