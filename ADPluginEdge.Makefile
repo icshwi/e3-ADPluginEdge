@@ -1,5 +1,6 @@
 #
-#  Copyright (c) 2018 - Present  European Spallation Source ERIC
+#  Copyright (c) 2019            Jeong Han Lee
+#  Copyright (c) 2018 - 2019     European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
 #  it and/or modify it under the terms of the GNU General Public License
@@ -17,11 +18,9 @@
 # 
 # Author  : Jeong Han Lee
 # email   : jeonghan.lee@gmail.com
-# Date    : Tuesday, April 17 00:11:32 CEST 2018
-# version : 0.0.1 
+# Date    : Thursday, March 28 22:45:02 CET 2019
+# version : 0.0.2
 #
-
-
 
 where_am_I := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 include $(E3_REQUIRE_TOOLS)/driver.makefile
@@ -37,6 +36,8 @@ endif
 
 # Exclude linux-ppc64e6500
 EXCLUDE_ARCHS = linux-ppc64e6500
+EXCLUDE_ARCHS += linux-corei7-poky
+
 
 APP:=edgeApp
 APPDB:=$(APP)/Db
