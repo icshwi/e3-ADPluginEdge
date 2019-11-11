@@ -60,6 +60,7 @@ HEADERS += $(APPSRC)/NDPluginEdge.h
 
 # We have to convert all to db 
 TEMPLATES += $(wildcard $(APPDB)/*.db)
+TEMPLATES += $(wildcard $(APPDB)/*.req)
 
 # TEMPLATES += $(APPDB)/pluginEdge.template
 
